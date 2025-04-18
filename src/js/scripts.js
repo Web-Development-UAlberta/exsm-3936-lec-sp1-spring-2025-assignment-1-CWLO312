@@ -1,15 +1,15 @@
 async function main() {
 //define engine class
   class engine {
-    constructor(cylinderCount, isRunning) {
-      this.cylinderCount = cylinderCount || 0;
+    constructor(cylinderCount) {
+      this.cylinderCount = cylinderCount;
       this.isRunning = false;
     }
     get cylinderCount() {
       return this._cylinderCount;
     }
     set cylinderCount(cylinderCount) {
-          if (typeof cylinderCount !== "number" ||cylinderCount < 0 || cylinderCount % 1 !== 0) {
+          if (typeof cylinderCount !== "number" || cylinderCount < 0 || cylinderCount % 1 !== 0) {
            output ("Invalid cylinder count, it has to be a positive integer number. Defaulting to 0 cyclinder.");
            this._cylinderCount = 0;
           }
@@ -22,8 +22,8 @@ async function main() {
       return this._isRunning;
     }
     set isRunning(isRunning) {
-        if (isRunning !== true || isRunning !== false) {
-          output("Invalid engine running value, it has to be true or false. Defaulting to be false - not running.");
+        if (typeof isRunning !== "boolean") {
+          output("Invalid engine running status, it has to be true or false. Defaulting to be false - not running.");
           this._isRunning = false;
         } else {
           this._isRunning = isRunning;
@@ -33,13 +33,57 @@ async function main() {
   
 //define car class
     class car { 
-    constructor(make, model, year, engine) {
+    constructor(make, model, year) {
       this.make = make;
       this.model = model;
       this.year = year;
-      this._odometer = 0;            
-      this._engine = engine;
+      this._odometer = 0;
+      const myEngine = new engine(4);            
+      this._engine = myEngine;
     }
+
+
+get make() {
+  return this._make;  
+}
+
+get model() {
+  return this._model;  
+}
+
+get year() {
+  return this._year;  
+}
+
+set make(make) {
+  if (typeof make !== "string" || make.length < 1) {
+    output("Invalid make, it has to be a non-empty string. Defaulting to empty string.");
+    this._make = "";
+  } else {
+    this._make = make;
+  }
+}
+
+set model(model) {
+  if (typeof model !== "string" || model.length < 1) {
+    output("Invalid model, it has to be a non-empty string. Defaulting to empty string.");
+    this._model = "";
+  } else {
+    this._model = model;
+  }
+}
+
+set year(year) {
+  if (typeof year !== "number" || year < 0 || year % 1 !== 0) {
+    output("Invalid year, it has to be a positive integer number. Defaulting to 0.");
+    this._year = 0;
+  } else {
+    this._year = year;
+  }
+  
+}
+
+
 //define showInfo method
     showInfo() {
       return `The car is ${this.make} ${this.model} from ${this.year}; the odometer is at ${this._odometer}. this engine has ${this._engine._cylinderCount} cylinders.`;
@@ -60,8 +104,8 @@ async function main() {
      return this._odometer;
     }
   }
-  const engine1 = new engine(4, 3);
-  const myCar = new car("Toyota", "Camry", 2025, engine1);
+ // const engine1 = new engine(4);
+  const myCar = new car("Toyota", "Camry", 2025);
   output(myCar.showInfo());
 
   output(myCar.startEngine());
