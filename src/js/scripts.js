@@ -23,7 +23,8 @@ async function main() {
     }
     set isRunning(isRunning) {
         if (isRunning !== true || isRunning !== false) {
-          output("Invalid engine running value, it has to be true or false.");
+          output("Invalid engine running value, it has to be true or false. Defaulting to be false - not running.");
+          this._isRunning = false;
         } else {
           this._isRunning = isRunning;
         }
