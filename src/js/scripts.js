@@ -16,8 +16,7 @@ async function main() {
           else {
             this._cylinderCount = cylinderCount;
           }        
-    }
-    
+    }    
     get isRunning() {
       return this._isRunning;
     }
@@ -30,8 +29,7 @@ async function main() {
         }
       }
     }
-  
-//define car class
+  //define car class
     class car { 
     constructor(make, model, year) {
       this.make = make;
@@ -41,47 +39,39 @@ async function main() {
       const myEngine = new engine(4);            
       this._engine = myEngine;
     }
-
-
-get make() {
-  return this._make;  
-}
-
-get model() {
-  return this._model;  
-}
-
-get year() {
-  return this._year;  
-}
-
-set make(make) {
-  if (typeof make !== "string" || make.length < 1) {
-    output("Invalid make, it has to be a non-empty string. Defaulting to empty string.");
-    this._make = "";
-  } else {
-    this._make = make;
-  }
-}
-
-set model(model) {
-  if (typeof model !== "string" || model.length < 1) {
-    output("Invalid model, it has to be a non-empty string. Defaulting to empty string.");
-    this._model = "";
-  } else {
-    this._model = model;
-  }
-}
-
-set year(year) {
-  if (typeof year !== "number" || year < 0 || year % 1 !== 0) {
-    output("Invalid year, it has to be a positive integer number. Defaulting to 0.");
-    this._year = 0;
-  } else {
-    this._year = year;
-  }
-  
-}
+      get make() {
+        return this._make;  
+      }
+      get model() {
+        return this._model;  
+      }
+      get year() {
+        return this._year;  
+      }
+      set make(make) {
+        if (typeof make !== "string" || make.length < 1) {
+          output("Invalid make, it has to be a non-empty string. Defaulting to empty string.");
+          this._make = "";
+        } else {
+          this._make = make;
+        }
+      }
+      set model(model) {
+        if (typeof model !== "string" || model.length < 1) {
+          output("Invalid model, it has to be a non-empty string. Defaulting to empty string.");
+          this._model = "";
+        } else {
+          this._model = model;
+        }
+      }
+      set year(year) {
+        if (typeof year !== "number" || year < 0 || year % 1 !== 0) {
+          output("Invalid year, it has to be a positive integer number. Defaulting to 0.");
+          this._year = 0;
+        } else {
+          this._year = year;
+        }
+      }
 
 
 //define showInfo method
@@ -104,17 +94,16 @@ set year(year) {
      return this._odometer;
     }
   }
- // const engine1 = new engine(4);
+ // script that instantiates and “drives” the cars as described.;
   const myCar = new car("Toyota", "Camry", 2025);
-  output(myCar.showInfo());
-
-  output(myCar.startEngine());
+  myCar.startEngine();
   myCar.drive(100);
-  output(myCar.stopEngine());
-  output(myCar.startEngine());
+  myCar.stopEngine();
+  myCar.startEngine();
   myCar.drive(50);
-  output(myCar.stopEngine());
-  output(myCar._odometer);
+  myCar.stopEngine();
+  output(`The odometer is now at ${myCar._odometer}km`);
 
+//JSON string for myCar objec
   output (JSON.stringify(myCar));
 }
