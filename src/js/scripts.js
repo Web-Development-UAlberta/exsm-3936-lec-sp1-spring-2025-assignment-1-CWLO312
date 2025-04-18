@@ -17,7 +17,43 @@ async function main() {
             this._cylinderCount = cylinderCount;
           }        
     }    
+  }
+
+//define bonus transmission class
+class transmission {
+  constructor(transmissionType, gearCount) {
+    this.transmissionType = transmissionType;
+    this.gearCount = gearCount;
+  }
+  get transmissionType() {
+    return this._transmissionType;
+  }
+  get gearCount() {
+    return this._gearCount;
+  }
+  set transmissionType(transmissionType) {
+    if (typeof transmissionType !== "string" || transmissionType.length < 1) {
+      output("Invalid transmission type, it has to be a non-empty string. Defaulting to automatic transmission.");
+      this._transmissionType = "automatic";
+    } else { if (transmissionType === "automatic" || transmissionType === "manual") {
+      this._transmissionType = transmissionType;
+    } else {
+      output("Invalid transmission type, it has to be either automatic or manual. Defaulting to automatic transmission.");
+      this._transmissionType = "automatic";
     }
+    }
+  }  
+  
+  set gearCount(gearCount) {
+    if (typeof gearCount !== "number" || gearCount < 0 || gearCount % 1 !== 0) {
+      output("Invalid gear count, it has to be a positive integer number. Defaulting to 0 gear.");
+      this._gearCount = 0;
+    } else {
+      this._gearCount = gearCount;
+    }
+  }
+}
+
   //define car class
     class car { 
     constructor(make, model, year) {
@@ -27,6 +63,8 @@ async function main() {
       this._odometer = 0;
       const myEngine = new engine(4);            
       this._engine = myEngine;
+      const myTransmission = new transmission("automatic", 6);
+      this._transmission = myTransmission;
     }
       get make() {
         return this._make;  
@@ -62,11 +100,6 @@ async function main() {
         }
       }
 
-
-//define showInfo method
-    showInfo() {
-      return `The car is ${this.make} ${this.model} from ${this.year}; the odometer is at ${this._odometer}. this engine has ${this._engine._cylinderCount} cylinders.`;
-    }
 //define startEngine method
     startEngine() {
       if (this._engine.isRunning === true) {
