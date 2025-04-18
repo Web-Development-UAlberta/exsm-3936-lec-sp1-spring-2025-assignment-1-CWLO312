@@ -45,14 +45,23 @@ class transmission {
   }  
   
   set gearCount(gearCount) {
-    if (typeof gearCount !== "number" || gearCount < 0 || gearCount % 1 !== 0) {
-      output("Invalid gear count, it has to be a positive integer number. Defaulting to 0 gear.");
-      this._gearCount = 0;
+    if (gearCount === "Park") {
+      this._gearCount = "Park";}  
+    else if (gearCount === "Neutral") {
+      this._gearCount = "Neutral";      
+    }
+    else if (gearCount === "Reverse") {
+      this._gearCount = "Reverse";
+    }
+    else if (typeof gearCount !== "number" || gearCount <= 0 || gearCount % 1 !== 0) {
+      output("Invalid gear count, non park, neutral gear or reverse gear has to be a positive integer number. Defaulting to Park gear.");
+      this._gearCount = "Park";
     } else {
       this._gearCount = gearCount;
     }
   }
 }
+
 
   //define car class
     class car { 
@@ -100,7 +109,7 @@ class transmission {
         }
       }
 
-//define startEngine method
+//define startEngine method with expection message
     startEngine() {
       if (this._engine.isRunning === true) {
         output("The engine is already running.");
@@ -110,7 +119,7 @@ class transmission {
       }
       return this._engine.isRunning;
     }
-//define stopEngine method
+//define stopEngine method with expection message
     stopEngine() {
       if (this._engine.isRunning === false) {
         output("The engine is already stopped.");
@@ -120,7 +129,7 @@ class transmission {
       }
       return this._engine.isRunning;
     }
-//define drive method
+//define drive method with expection message
     drive(distanceToDrive) {
       if (this._engine.isRunning === false) {
         output("The engine is not running. No distance has been driven.");
