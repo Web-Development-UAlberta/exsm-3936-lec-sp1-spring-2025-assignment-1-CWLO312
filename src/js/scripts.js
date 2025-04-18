@@ -17,17 +17,6 @@ async function main() {
             this._cylinderCount = cylinderCount;
           }        
     }    
-    get isRunning() {
-      return this._isRunning;
-    }
-    set isRunning(isRunning) {
-        if (typeof isRunning !== "boolean") {
-          output("Invalid engine running status, it has to be true or false. Defaulting to be false - not running.");
-          this._isRunning = false;
-        } else {
-          this._isRunning = isRunning;
-        }
-      }
     }
   //define car class
     class car { 
@@ -80,17 +69,35 @@ async function main() {
     }
 //define startEngine method
     startEngine() {
-      this._engine.isRunning = true;
+      if (this._engine.isRunning === true) {
+        output("The engine is already running.");
+        return this._engine.isRunning;
+      } else {
+            this._engine.isRunning = true;
+      }
       return this._engine.isRunning;
     }
 //define stopEngine method
     stopEngine() {
-      this._engine.isRunning = false;
+      if (this._engine.isRunning === false) {
+        output("The engine is already stopped.");
+        return this._engine.isRunning;
+      } else {
+            this._engine.isRunning = false;
+      }
       return this._engine.isRunning;
     }
 //define drive method
     drive(distanceToDrive) {
+      if (this._engine.isRunning === false) {
+        output("The engine is not running. No distance has been driven.");
+        return this._odometer;
+      } else if (typeof distanceToDrive !== "number" || distanceToDrive <= 0 ) {
+        output("Invalid distance, it has to be a positive number. No distance has been driven.");
+        return this._odometer;
+      } else {
       this._odometer = this._odometer + distanceToDrive;
+      }
      return this._odometer;
     }
   }
@@ -102,7 +109,7 @@ async function main() {
   myCar.startEngine();
   myCar.drive(50);
   myCar.stopEngine();
-  output(`The odometer is now at ${myCar._odometer}km`);
+  output(`The odometer is now at ${myCar._odometer} km`);
 
 //JSON string for myCar objec
   output (JSON.stringify(myCar));
